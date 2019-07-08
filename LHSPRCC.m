@@ -29,7 +29,7 @@ end
 % (in case want to re-run with diff time limits?)
 
 %---Plot Histograms to Visualize Parameter Distributions---% 
-% TO DO: ask for feedback - nest this into the drawsamples function?                                                                                      % 
+% TO DO: ask for feedback - nest this into the DrawSamples function?                                                                                      % 
 
 for mo=1:M  
     a = min(parameters(mo).sample);

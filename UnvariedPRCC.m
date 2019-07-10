@@ -1,10 +1,13 @@
-function [prcc,studentT]=UnvariedPRCC(M,N,K,Simdata,t)
+function [prcc,studentT]=UnvariedPRCC(M,N,A,Simdata,t_index,x_index)
+
+    K=zeros(N,M+1); % number of samples drawn N x number of model parameters (M) + 1 output column
+    K([1:N],[1:M])=A([1:N],[1:M]); %Taking the information from A and putting it into K
 
 	prcc=zeros(M+1,1); % will hold PRCC statistic for each parameter for chosen point (x=0, or otherwise)
     studentT=zeros(M+1,1); % will hold the studentT statistic
     
     for n=1:N %loop through each of the N samples
-        output=Simdata(n).y(x);
+        output=Simdata(n).y(x_index);
         K(n,M+1)=output; %Output results go in the added last column, the M+1st column.
     end
 

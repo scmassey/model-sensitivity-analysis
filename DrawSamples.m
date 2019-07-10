@@ -1,4 +1,4 @@
-function [parameters, A]=drawsamples(M,N) 
+function [parameters, A]=DrawSamples(M,N) 
 
 % Initializing matrices to store samples, struct to store parameter names, distribution type, and sample values:
 A=zeros(N,M); 

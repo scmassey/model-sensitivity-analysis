@@ -1,10 +1,19 @@
-function prccPlot = plotUnvariedPRCC(M,N,x,labelstring,parameters,prcc,studentT)
+function prccPlot = plotUnvariedPRCC(M,N,x,labelstring,parameters,prcc)
 
     figure()
     hold on
     box on
-    
-    p=categorical({parameters.name});
+
+    % parNames = zeros(1,N);
+
+    % for i=1:N
+    % 	parNames(i) = getfield(parameters(i),'name');
+    % end 
+    % p=categorical({parNames})
+
+    temp = {parameters.name}
+    p=categorical(temp);
+
     prccPlot = bar(p,prcc(1:M));
 
     % xlabel('sampled parameters');

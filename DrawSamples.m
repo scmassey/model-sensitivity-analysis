@@ -34,11 +34,15 @@ for m=1:M
         mu = input('Enter the mean: '); % TO DO: add check that these are type double - and similarly for other distbn inputs below
         ssigma = input('Enter the variance (square of standard deviation): '); 
         
-        x1 = ssigma*sqrt(2)*erfinv(-0.9999)+mu;
+        x1 = sqrt(2*ssigma)*erfinv(-0.9999)+mu;
 
         for n=1:N
 
-            x2=ssigma*sqrt(2)*erfinv(2*intervalarea+erf(x1-mu)/(ssigma*sqrt(2)))+mu;
+            if n~=N
+                x2 = sqrt(2*ssigma)*erfinv(2*n*intervalarea-1)+mu;
+            elseif n==N
+                x2 = sqrt(2*ssigma)*erfinv(0.9999)+mu;
+            end
 
             parameters(m).sample(n)=rand(1)*abs(x2-x1)+x1;
 
@@ -47,6 +51,7 @@ for m=1:M
             x1=x2;
 
         end
+
 
         fprintf(['All samples drawn for parameter ', parameters(m).name,'.\n']);
         

@@ -17,7 +17,7 @@ while rem(M,1)~=0 || M<=0
     M = input('Number of parameters should be an integer > 0. Please re-enter the number of parameters: ');
 end
 
-N = input('Number of samples to draw? (recommend 50 to 1000; higher yields better results, fewer is faster for testing): '); 
+N = input('Number of samples to draw? (recommend 100 to 1000): '); 
 while rem(N,1)~=0 || N<=0
     N = input('Number of samples should be an integer > 0. Please re-enter the number of samples: ');
 end
@@ -37,7 +37,7 @@ save(outFileName, 'parameters', 'A')
 % Specify how many bins you want for your histograms:                            
 binCount = ceil(N/10); % can change this manually, just make sure it's an integer value  
 
-histPlot = plotSampleHists(M,parameters,binCount)
+histPlot = plotSampleHists(M,parameters,binCount);
 
 pause(1) %Time to dock/maximize the figure before it saves, if you prefer.
 
@@ -87,12 +87,24 @@ end
 
 save(outFileName, 'Simdata') % add Simdata to the saved .mat file
 
-% EDIT THE FOLLOWING STRING TO NAME YOUR SIMULATION DATA:
+
+OutputOfInterest = zeros(N,length(x));
+% OutputOfInterest = zeros(N,length(x)length(t))
+
+for si = 1:N, 
+% EDIT THE FOLLOWING TO SPECIFY OUTPUT DATA TO COMPARE:
+    OutputOfInterest(si,:) = Simdata(si).y;
+% % OutputOfInterest(si,:,:) =Simdata(si).r./(Simdata(si).c+Simdata(si).r)
+end
+
+% EDIT THE FOLLOWING STRING TO NAME OUTPUT DATA:
 labelstring = 'y'; % consistent id for plot labels, filenames
+% % labelstring = 'ratio'
+
 
 %---Visualize the range of simulation results with errorbar plots---%
 
-outPlot = plotSimulationOutput(x,N,Simdata,labelstring) 
+outPlot = plotSimulationOutput(x,N,OutputOfInterest,labelstring); 
 
 pause(5)
 
@@ -116,24 +128,24 @@ if strcmp(tx_varied,'Y')
 
     % x_index = 5; % specify spatial index if a PDE model
     % x_index = []; % for time varied ODE model
-%     [prcc,studentT]=TimeVariedPRCC(M,N,K,Simdata,t,x_index);
+%     [prcc]=TimeVariedPRCC(M,N,K,Simdata,t,x_index);
 
     % To look at variation in SPACE:
 
     % t_index= 10; % specify time index if a PDE model
     t_index =[]; % for a spatially varied ODE model
-    [prcc,studentT] = VariedPRCC(M,N,A,Simdata,x,t_index);
+    prcc = VariedPRCC(M,N,A,OutputOfInterest,x,t_index);
 
-    prccPlot = plotVariedPRCC(M,N,x,labelstring,parameters,prcc,studentT)
+    prccPlot = plotVariedPRCC(M,N,x,labelstring,parameters,prcc);
     
 elseif strcmp(tx_varied,'N')
 
     % EDIT INDICES FOR EVALUATING RESULTS:
     x_index = 1; % if an ODE, leave the n/a index empty;
     t_index =[];  % if PDE, specify indices for both
-    [prcc,studentT] = UnvariedPRCC(M,N,A,Simdata,t_index,x_index);
+    prcc = UnvariedPRCC(M,N,A,OutputOfInterest,t_index,x_index);
 
-    prccPlot = plotUnvariedPRCC(M,N,labelstring,parameters,prcc,studentT)
+    prccPlot = plotUnvariedPRCC(M,N,labelstring,parameters,prcc);
 
 end
 

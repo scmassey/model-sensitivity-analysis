@@ -1,5 +1,5 @@
 # model-sensitivity-analysis
-##Latin hypercube sampling and partial rank correlation coefficients for analyzing model parameter sensitivity.
+## Latin hypercube sampling and partial rank correlation coefficients for analyzing model parameter sensitivity.
 
 LHS + PRCC is a useful method for investigating the sensitivity of a mathematical model to it's parameters. This can be useful in developing the model to understand how it behaves in various parameter regimes, as well as to understand better how uncertainty in your parameter estimates may impact the results given by the model.  
 

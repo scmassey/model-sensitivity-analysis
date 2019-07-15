@@ -27,9 +27,10 @@ end
 
 % EDIT THE FOLLOWING FOR SAVING YOUR SAMPLES AND SIMULATION DATA:
 outFileStr = 'LHS-testlinear'; % give workspace an appropriate unique name
-outFileName = [outFileStr,'.mat'];
+outFileName1 = [outFileStr,'_samples.mat'];
+outFileName2 = [outFileStr,'_results.mat'];
 
-save(outFileName, 'parameters', 'A')
+save(outFileName1, 'parameters', 'A')
 
 
 %---Plot Histograms to Visualize Parameter Distributions---% 
@@ -85,13 +86,13 @@ for j=1:N
     toc
 end
 
-save(outFileName, 'Simdata') % add Simdata to the saved .mat file
+save(outFileName2, 'Simdata') % add Simdata to the saved .mat file
 
 
 OutputOfInterest = zeros(N,length(x));
 % OutputOfInterest = zeros(N,length(x)length(t))
 
-for si = 1:N, 
+for si = 1:N
 % EDIT THE FOLLOWING TO SPECIFY OUTPUT DATA TO COMPARE:
     OutputOfInterest(si,:) = Simdata(si).y;
 % % OutputOfInterest(si,:,:) =Simdata(si).r./(Simdata(si).c+Simdata(si).r)
@@ -144,6 +145,9 @@ elseif strcmp(tx_varied,'N')
     x_index = 1; % if an ODE, leave the n/a index empty;
     t_index =[];  % if PDE, specify indices for both
     prcc = UnvariedPRCC(M,N,A,OutputOfInterest,t_index,x_index);
+    
+    paramNames={parameters.name};
+    paramNames2=[parameters.name];
 
     prccPlot = plotUnvariedPRCC(M,N,labelstring,parameters,prcc);
 
